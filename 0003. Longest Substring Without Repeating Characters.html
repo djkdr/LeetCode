@@ -45,27 +45,28 @@ s consists of English letters, digits, symbols and spaces.
  * @param {string} s
  * @return {number}
  */
-var lengthOfLongestSubstring = function(s) {
+ var lengthOfLongestSubstring = function(s) {
     //var text = s;
     var sub = '';
     var temp = '';
     var leng = 0;
     
     // 1. Check String - Regular Expression
-    var english = /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/;
+    var english = /^[A-Za-z\d\s_!@#$%^&*()]*[A-Za-z\d][A-Za-z\d\s_!@#$%^&*()]*$/;
     
     if (s != '') {
          
+        // including space
         if(s.search(/\s/)!=-1){
+            
             if(english.test(s)){
-                console.log("English with space: "+s);
+                console.log("English or Space: "+s);
             } else {
                 if(s.replaceAll(" ", "") == ""){
                     console.log("Only Space: "+s);
                     leng = 1;
                 } else {
-                    console.log("No English: "+s);
-                    return;
+                    console.log("English with space: "+s);
                 }
             }
         }  else {
@@ -88,19 +89,23 @@ var lengthOfLongestSubstring = function(s) {
         
             if(!temp.includes(s.charAt(i))){
                 temp += s.charAt(i);
+
             } else {
-                if(sub.length <= temp.length){
-                    sub = temp;
-                    temp = s.charAt(i);
-                }else{
-                    temp = s.charAt(i);
-                }
+                var arr = temp.split(s.charAt(i));
+                // console.log(arr);
+
+                temp = arr[1] + s.charAt(i);
             }
+
+            if(sub.length <= temp.length){
+                sub = temp;
+                // temp = s.charAt(i);
+            }else{
+                // temp = s.charAt(i);
+            }
+
         }
-        
-        if(sub.length <= temp.length){
-            sub = temp;
-        }
+    
     }
     
     // 3. If the string is empty, return the "length"
@@ -120,12 +125,9 @@ var lengthOfLongestSubstring = function(s) {
     return leng;
 };
 
-// lengthOfLongestSubstring("abcabcbb");
-// lengthOfLongestSubstring("bbbbb");
-// lengthOfLongestSubstring("pwwkew");
-lengthOfLongestSubstring("");
-lengthOfLongestSubstring(" ");
-lengthOfLongestSubstring("c");
-lengthOfLongestSubstring("au");
-lengthOfLongestSubstring("dvdf");
+// lengthOfLongestSubstring("동진");
+// lengthOfLongestSubstring("Steve 동진");
+// lengthOfLongestSubstring("123");
+// lengthOfLongestSubstring("12 5");
+lengthOfLongestSubstring("aabaab하");
 </script>
